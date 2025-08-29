@@ -8,6 +8,10 @@ const DOB = "06072005";
 const EMAIL = "krishnasai.rv2022@vitstudent.ac.in";
 const ROLL_NUMBER = "22BCE3325";
 
+app.get("/", (req, res) => {
+  res.send("✅ API is running. Use POST /bfhl");
+});
+
 app.post("/bfhl", (req, res) => {
   try {
     const data = req.body.data;
@@ -73,8 +77,4 @@ app.post("/bfhl", (req, res) => {
     });
   }
 });
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
-});
+module.exports = app;
