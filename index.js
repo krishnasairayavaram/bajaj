@@ -8,6 +8,10 @@ const DOB = "06072005";
 const EMAIL = "krishnasai.rv2022@vitstudent.ac.in";
 const ROLL_NUMBER = "22BCE3325";
 
+app.get("/", (req, res) => {
+  res.send("✅ API is running. Use POST /bfhl");
+});
+
 app.post("/bfhl", (req, res) => {
   try {
     const data = req.body.data;
@@ -27,7 +31,7 @@ app.post("/bfhl", (req, res) => {
     let alphaConcat = "";
 
     data.forEach(item => {
-      if (/^-?\d+$/.test(item)) { // numbers
+      if (/^-?\d+$/.test(item)) {
         let num = parseInt(item, 10);
         if (num % 2 === 0) {
           even_numbers.push(item);
@@ -35,7 +39,7 @@ app.post("/bfhl", (req, res) => {
           odd_numbers.push(item);
         }
         sum += num;
-      } else if (/^[a-zA-Z]$/.test(item)) { // only single alphabet
+      } else if (/^[a-zA-Z]+$/.test(item)) {
         alphabets.push(item.toUpperCase());
         alphaConcat += item;
       } else {
@@ -43,7 +47,6 @@ app.post("/bfhl", (req, res) => {
       }
     });
 
-    // Special concatenation: reverse + alternating cases
     let concatReversed = alphaConcat
       .split("")
       .reverse()
@@ -54,7 +57,7 @@ app.post("/bfhl", (req, res) => {
 
     const response = {
       is_success: true,
-      user_id: `${FULL_NAME}_${DOB}`,
+      user_id: `${FULL_NAME.toLowerCase()}_${DOB}`,
       email: EMAIL,
       roll_number: ROLL_NUMBER,
       odd_numbers,
@@ -74,8 +77,4 @@ app.post("/bfhl", (req, res) => {
     });
   }
 });
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
-});
+module.exports = app;
